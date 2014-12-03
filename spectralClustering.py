@@ -48,6 +48,6 @@ def comorbidityMatrix():
         
 
 matrix,keys = convertGeneDisease_additive()
-cluster(matrix, keys, "newGeneDiseaseCluters_additive.txt", 100, "rbf")
+cluster(matrix, keys, "newGeneDiseaseCluters_additive.txt", 20, "rbf")
 matrix, keys = comorbidityMatrix()
-cluster(matrix, keys, "newComorbidityClusters_additive.txt", 100, "precomputed")
+cluster(matrix, keys, "newComorbidityClusters_additive.txt", 20, "precomputed")
