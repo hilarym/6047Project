@@ -4,13 +4,13 @@ from scipy import stats
 
 def createClusters(clusterFile):
     clusterFile = open(clusterFile)
-    clusters = [set() for x in xrange(100)]
-    #clusters = []
+    #clusters = [set() for x in xrange(100)]
+    clusters = []
     for line in clusterFile:
         strippedLine = line.strip()
         lineList = strippedLine.split()
-        clusters[int(lineList[1])].add(lineList[0])
-        #clusters.append(set(lineList))
+        #clusters[int(lineList[1])].add(lineList[0])
+        clusters.append(set(lineList))
     clusterFile.close()
 
     return clusters
@@ -30,7 +30,7 @@ def hyperGeomTest(clusters1, clusters2):
                 print pvalue
         
         
-clusters1 = createClusters("newGeneDiseaseClusters.txt")
-clusters2 = createClusters("newComorbidityClusters.txt")
+clusters1 = createClusters("geneDiseaseClusters_additive.txt")
+clusters2 = createClusters("absComorbidityClusters.txt")
 hyperGeomTest(clusters1, clusters2)
 print "done"

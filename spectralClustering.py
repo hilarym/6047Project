@@ -1,4 +1,7 @@
-from convertGeneDisease.py import convertGeneDisease
+from convertGeneDisease import convertGeneDisease_additive
+import numpy as np
+import scipy
+from sklearn import cluster as c
 
 
 def cluster(matrix, diseases, fileName, numClusters, affinityName):
@@ -44,7 +47,7 @@ def comorbidityMatrix():
         
         
 
-matrix,keys = convertGeneDisease()
-cluster(matrix, keys, "newGeneDiseaseCluters.txt", 20, "rbf")
+matrix,keys = convertGeneDisease_additive()
+cluster(matrix, keys, "newGeneDiseaseCluters_additive.txt", 100, "rbf")
 matrix, keys = comorbidityMatrix()
-cluster(matrix, keys, "newComorbidityClusters.txt", 20, "precomputed")
+cluster(matrix, keys, "newComorbidityClusters_additive.txt", 100, "precomputed")
