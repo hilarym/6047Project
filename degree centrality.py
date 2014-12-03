@@ -34,7 +34,7 @@ def degree_comorbidity():
     print ("ave degree: ", aveDegree)
         
 
-## gene-disease
+## gene-disease with genes as the degree factor
 ## add one for each gene the disease is connected to
 def degree_geneDisease():
     nodes = {}
@@ -57,9 +57,47 @@ def degree_geneDisease():
     aveDegree = sum(nodes.values())*1.0/len(nodes)
     print ("ave degree: ", aveDegree)
        
-    
+## gene-disease for disease-disease version
+## add one for each disease the disease is connected to
+def degree_betterGeneDisease():
+    ## dictionary where each key is a node and its value is
+    ## a set of genes it is connected to
+    nodeGenes = {}
+    file = open("trimmedGeneDisease.txt")
+    for line in file:
+        line = line.strip()
+        words = line.split('\t')
+        disease = words[0]
+        if disease in nodeGenes:
+            nodeGenes[disease].add(words[1])
+        else:
+            nodeGenes[disease] = set(words[1])
+    ## dictionary where each key is a node and its value is the
+    ## number of diseases it is related to
+    nodes = {}
+    for disease1 in nodeGenes:
+        for disease2 in nodeGenes:
+            if disease1 != disease2:
+                genes1 = nodeGenes[disease1]
+                genes2 = nodeGenes[disease2]
+                degree = len(genes1 & genes2)
+                if degree > 0:
+                    if disease1 in nodes:
+                        nodes[disease1] += 1
+                    else:
+                        nodes[disease1] = 1
+          
+    degrees = sorted(nodes.items(), key=lambda x: x[1])
+    print ("mins")
+    for (disease, degree) in degrees[0:5]:
+        print (disease, ': degree of ', degree)
+    print ("maxes")
+    for (disease, degree) in degrees[-5:]:
+        print (disease, ': degree of ', degree)
+    aveDegree = sum(nodes.values())*1.0/len(nodes)
+    print ("ave degree: ", aveDegree)
             
 
 if __name__ == '__main__':
     #degree_comorbidity()
-    degree_geneDisease()
+    degree_betterGeneDisease()
